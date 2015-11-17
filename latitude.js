@@ -7,8 +7,8 @@ request('http://open-notify-api.herokuapp.com/iss-now.json', function (error, re
     
     var documents = theResult.iss_position;
 //    console.log(typeof(documents));
-    console.log(documents.latitude);
-    console.log(documents.longitude);
+    console.log(documents.latitude.toFixed(2));
+    console.log(documents.longitude.toFixed(2));
 
   }  
 });
