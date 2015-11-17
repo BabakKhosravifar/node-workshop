@@ -1,6 +1,15 @@
 var request = require('request');
 
 
+Number.prototype.toRadians = function() {
+  return this * Math.PI / 180;
+}
+
+function toRad(Value) {
+    /** Converts numeric degrees to radians */
+    return Value * Math.PI / 180;
+}
+
 
   var iss_pos = [];
   var user_pos = [];
@@ -28,8 +37,26 @@ request('http://open-notify-api.herokuapp.com/iss-now.json', function (error, re
 console.log(iss_pos);
 console.log(user_pos);
     
-    var dis = ((iss_pos[0]-user_pos[0])^2+(iss_pos[1]-user_pos[1])^2)^0.5;
-    console.log(dis);
+ //   var dis = ((iss_pos[0]-user_pos[0])^2+(iss_pos[1]-user_pos[1])^2)^0.5;
+    
+    
+    var R = 6371000; // metres
+var φ1 = iss_pos[0]* Math.PI / 180;
+var φ2 = user_pos[0]* Math.PI / 180;
+var Δφ = (user_pos[0]-iss_pos[0])* Math.PI / 180;
+var Δλ = (user_pos[1]-iss_pos[1])* Math.PI / 180;
+
+var a = Math.sin(Δφ/2) * Math.sin(Δφ/2) +
+        Math.cos(φ1) * Math.cos(φ2) *
+        Math.sin(Δλ/2) * Math.sin(Δλ/2);
+var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+
+var dis = R * c;
+console.log(dis);
+    
+    
+    
+    
   });
 
 });
